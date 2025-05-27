@@ -17,4 +17,8 @@ public class PasteService {
         return pasteRepository.findByPasteKey(pasteKey).orElseThrow();
     }
 
+    public Paste getPasteFromPasteId(long pasteId) {
+        return pasteRepository.findById(pasteId).orElseThrow();
+    }
+
 }
