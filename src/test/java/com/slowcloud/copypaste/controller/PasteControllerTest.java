@@ -18,7 +18,9 @@ import com.slowcloud.copypaste.service.PasteService;
 @WebMvcTest({PasteController.class})
 class PasteControllerTest {
 
-    private static final String CUSTOM_KEY = "customKey";
+    private static final SyntaxHighlight SYNTAX_HIGHLIGHT = SyntaxHighlight.NONE;
+    private static final String CONTENT = "hello!";
+    private static final String PASTE_KEY = "customKey";
     private static final int PASTE_ID = 1;
 
     @MockitoBean
@@ -26,20 +28,25 @@ class PasteControllerTest {
 
     private Paste getPasteEntityFixture() {
         Paste paste = new Paste();
-        paste.setContent("hello!");
-        paste.setPasteKey(CUSTOM_KEY);
-        paste.setSyntaxHighlight(SyntaxHighlight.NONE);
+        paste.setContent(CONTENT);
+        paste.setPasteKey(PASTE_KEY);
+        paste.setSyntaxHighlight(SYNTAX_HIGHLIGHT);
         return paste;
+    }
+    
+    private PasteResponseDto getPasteResponseDtoFixture() {
+        return new PasteResponseDto(PASTE_ID, PASTE_KEY, CONTENT, SYNTAX_HIGHLIGHT);
     }
 
     @Test
     void getPasteFromPasteKey(@Autowired MockMvcTester mockMvcTester) {
 
         Paste paste = getPasteEntityFixture();
+        PasteResponseDto pasteResponseDto = getPasteResponseDtoFixture();
 
-        when(pasteService.getPasteFromPasteKey(CUSTOM_KEY)).thenReturn(paste);
+        when(pasteService.getPasteFromPasteKey(PASTE_KEY)).thenReturn(pasteResponseDto);
 
-        mockMvcTester.get().uri("/api/paste").param("pasteKey", CUSTOM_KEY)
+        mockMvcTester.get().uri("/api/paste").param("pasteKey", PASTE_KEY)
         .exchange()
         .assertThat()
         .hasStatusOk()
@@ -59,8 +66,9 @@ class PasteControllerTest {
     void getPasteFromPasteId(@Autowired MockMvcTester mockMvcTester) {
 
         Paste paste = getPasteEntityFixture();
+        PasteResponseDto pasteResponseDto = getPasteResponseDtoFixture();
 
-        when(pasteService.getPasteFromPasteId(1)).thenReturn(paste);
+        when(pasteService.getPasteFromPasteId(1)).thenReturn(pasteResponseDto);
 
         mockMvcTester.get().uri(String.format("/api/paste/%d", PASTE_ID))
         .exchange()
