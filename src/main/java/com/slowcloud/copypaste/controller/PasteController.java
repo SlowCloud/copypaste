@@ -3,7 +3,6 @@ package com.slowcloud.copypaste.controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.slowcloud.copypaste.dto.PasteResponseDto;
-import com.slowcloud.copypaste.entity.Paste;
 import com.slowcloud.copypaste.service.PasteService;
 
 import lombok.RequiredArgsConstructor;
