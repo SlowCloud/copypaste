@@ -33,7 +33,11 @@ class PasteControllerTest {
     }
     
     private PasteResponseDto getPasteResponseDtoFixture() {
-        return new PasteResponseDto(PASTE_ID, CONTENT, SYNTAX_HIGHLIGHT);
+        return PasteResponseDto.builder()
+            .id(PASTE_ID)
+            .content(CONTENT)
+            .syntaxHighlight(SYNTAX_HIGHLIGHT)
+            .build();
     }
 
     @Test
@@ -52,8 +56,8 @@ class PasteControllerTest {
         .convertTo(PasteResponseDto.class)
         .satisfies(res -> {
             assertAll(
-                () -> assertEquals(paste.getContent(), res.content()),
-                () -> assertEquals(paste.getSyntaxHighlight(), res.syntaxHighlight())
+                () -> assertEquals(paste.getContent(), res.getContent()),
+                () -> assertEquals(paste.getSyntaxHighlight(), res.getSyntaxHighlight())
             );
         });
     
