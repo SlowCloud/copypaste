@@ -17,19 +17,17 @@ class PasteResponseMapperTest {
 
     private static final SyntaxHighlight SYNTAX_HIGHLIGHT = SyntaxHighlight.NONE;
     private static final String CONTENT = "hello!";
-    private static final String PASTE_KEY = "customKey";
     private static final int PASTE_ID = 1;
 
     private Paste getPasteEntityFixture() {
         Paste paste = new Paste();
         paste.setContent(CONTENT);
-        paste.setPasteKey(PASTE_KEY);
         paste.setSyntaxHighlight(SYNTAX_HIGHLIGHT);
         return paste;
     }
     
     private PasteResponseDto getPasteResponseDtoFixture() {
-        return new PasteResponseDto(PASTE_ID, PASTE_KEY, CONTENT, SYNTAX_HIGHLIGHT);
+        return new PasteResponseDto(PASTE_ID, CONTENT, SYNTAX_HIGHLIGHT);
     }
     
     @Autowired
@@ -49,7 +47,6 @@ class PasteResponseMapperTest {
         PasteResponseDto fixtureDto = getPasteResponseDtoFixture();
         assertAll(
             () -> assertEquals(generatedDto.content(), fixtureDto.content()),
-            () -> assertEquals(generatedDto.pasteKey(), fixtureDto.pasteKey()),
             () -> assertEquals(generatedDto.syntaxHighlight(), fixtureDto.syntaxHighlight())
         );
     }
@@ -63,7 +60,6 @@ class PasteResponseMapperTest {
         Paste fixturePaste = getPasteEntityFixture();
         assertAll(
             () -> assertEquals(generatedPaste.getContent(), fixturePaste.getContent()),
-            () -> assertEquals(generatedPaste.getPasteKey(), fixturePaste.getPasteKey()),
             () -> assertEquals(generatedPaste.getSyntaxHighlight(), fixturePaste.getSyntaxHighlight())
         );
     }

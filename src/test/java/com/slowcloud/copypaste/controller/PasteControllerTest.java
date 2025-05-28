@@ -20,7 +20,6 @@ class PasteControllerTest {
 
     private static final SyntaxHighlight SYNTAX_HIGHLIGHT = SyntaxHighlight.NONE;
     private static final String CONTENT = "hello!";
-    private static final String PASTE_KEY = "customKey";
     private static final int PASTE_ID = 1;
 
     @MockitoBean
@@ -29,37 +28,12 @@ class PasteControllerTest {
     private Paste getPasteEntityFixture() {
         Paste paste = new Paste();
         paste.setContent(CONTENT);
-        paste.setPasteKey(PASTE_KEY);
         paste.setSyntaxHighlight(SYNTAX_HIGHLIGHT);
         return paste;
     }
     
     private PasteResponseDto getPasteResponseDtoFixture() {
-        return new PasteResponseDto(PASTE_ID, PASTE_KEY, CONTENT, SYNTAX_HIGHLIGHT);
-    }
-
-    @Test
-    void getPasteFromPasteKey(@Autowired MockMvcTester mockMvcTester) {
-
-        Paste paste = getPasteEntityFixture();
-        PasteResponseDto pasteResponseDto = getPasteResponseDtoFixture();
-
-        when(pasteService.getPasteFromPasteKey(PASTE_KEY)).thenReturn(pasteResponseDto);
-
-        mockMvcTester.get().uri("/api/paste").param("pasteKey", PASTE_KEY)
-        .exchange()
-        .assertThat()
-        .hasStatusOk()
-        .bodyJson()
-        .convertTo(PasteResponseDto.class)
-        .satisfies(res -> {
-            assertAll(
-                () -> assertEquals(paste.getContent(), res.content()),
-                () -> assertEquals(paste.getPasteKey(), res.pasteKey()),
-                () -> assertEquals(paste.getSyntaxHighlight(), res.syntaxHighlight())
-            );
-        });
-    
+        return new PasteResponseDto(PASTE_ID, CONTENT, SYNTAX_HIGHLIGHT);
     }
 
     @Test
@@ -79,7 +53,6 @@ class PasteControllerTest {
         .satisfies(res -> {
             assertAll(
                 () -> assertEquals(paste.getContent(), res.content()),
-                () -> assertEquals(paste.getPasteKey(), res.pasteKey()),
                 () -> assertEquals(paste.getSyntaxHighlight(), res.syntaxHighlight())
             );
         });

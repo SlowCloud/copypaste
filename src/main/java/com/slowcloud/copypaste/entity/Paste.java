@@ -1,6 +1,5 @@
 package com.slowcloud.copypaste.entity;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
@@ -20,8 +19,6 @@ public class Paste {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(unique = true)
-    private String pasteKey;
     private String content;
     @Enumerated
     private SyntaxHighlight syntaxHighlight;
