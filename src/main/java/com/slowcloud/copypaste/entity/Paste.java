@@ -2,7 +2,6 @@ package com.slowcloud.copypaste.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,7 +23,7 @@ public class Paste {
     @Column(unique = true)
     private String pasteKey;
     private String content;
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated
     private SyntaxHighlight syntaxHighlight;
 
 }

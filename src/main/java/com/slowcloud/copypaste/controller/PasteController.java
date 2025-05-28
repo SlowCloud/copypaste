@@ -2,6 +2,7 @@ package com.slowcloud.copypaste.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.slowcloud.copypaste.dto.PasteResponseDto;
 import com.slowcloud.copypaste.entity.Paste;
 import com.slowcloud.copypaste.service.PasteService;
 
@@ -22,15 +23,21 @@ public class PasteController {
     private final PasteService pasteService;
 
     @GetMapping
-    public ResponseEntity<Paste> getPaste(@RequestParam String pasteKey) {
+    public ResponseEntity<PasteResponseDto> getPaste(@RequestParam String pasteKey) {
         Paste paste = pasteService.getPasteFromPasteKey(pasteKey);
-        return ResponseEntity.ok().body(paste);
+        PasteResponseDto pasteResponseDto = toPasteResponseDto(paste);
+        return ResponseEntity.ok(pasteResponseDto);
     }
 
     @GetMapping("/{pasteId}")
-    public ResponseEntity<Paste> getPasteByPasteId(@PathVariable long pasteId) {
+    public ResponseEntity<PasteResponseDto> getPasteByPasteId(@PathVariable long pasteId) {
         Paste paste = pasteService.getPasteFromPasteId(pasteId);
-        return ResponseEntity.ok().body(paste);
+        PasteResponseDto pasteResponseDto = toPasteResponseDto(paste);
+        return ResponseEntity.ok(pasteResponseDto);
+    }
+
+    private static PasteResponseDto toPasteResponseDto(Paste paste) {
+        return new PasteResponseDto(paste.getId(), paste.getPasteKey(), paste.getContent(), paste.getSyntaxHighlight());
     }
 
 }

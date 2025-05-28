@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.assertj.MockMvcTester;
 
+import com.slowcloud.copypaste.dto.PasteResponseDto;
 import com.slowcloud.copypaste.entity.Paste;
 import com.slowcloud.copypaste.entity.SyntaxHighlight;
 import com.slowcloud.copypaste.service.PasteService;
@@ -43,12 +44,12 @@ class PasteControllerTest {
         .assertThat()
         .hasStatusOk()
         .bodyJson()
-        .convertTo(Paste.class)
+        .convertTo(PasteResponseDto.class)
         .satisfies(res -> {
             assertAll(
-                () -> assertEquals(paste.getContent(), res.getContent()),
-                () -> assertEquals(paste.getPasteKey(), res.getPasteKey()),
-                () -> assertEquals(paste.getSyntaxHighlight(), res.getSyntaxHighlight())
+                () -> assertEquals(paste.getContent(), res.content()),
+                () -> assertEquals(paste.getPasteKey(), res.pasteKey()),
+                () -> assertEquals(paste.getSyntaxHighlight(), res.syntaxHighlight())
             );
         });
     
@@ -66,12 +67,12 @@ class PasteControllerTest {
         .assertThat()
         .hasStatusOk()
         .bodyJson()
-        .convertTo(Paste.class)
+        .convertTo(PasteResponseDto.class)
         .satisfies(res -> {
             assertAll(
-                () -> assertEquals(paste.getContent(), res.getContent()),
-                () -> assertEquals(paste.getPasteKey(), res.getPasteKey()),
-                () -> assertEquals(paste.getSyntaxHighlight(), res.getSyntaxHighlight())
+                () -> assertEquals(paste.getContent(), res.content()),
+                () -> assertEquals(paste.getPasteKey(), res.pasteKey()),
+                () -> assertEquals(paste.getSyntaxHighlight(), res.syntaxHighlight())
             );
         });
     
