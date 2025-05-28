@@ -24,20 +24,14 @@ public class PasteController {
 
     @GetMapping
     public ResponseEntity<PasteResponseDto> getPaste(@RequestParam String pasteKey) {
-        Paste paste = pasteService.getPasteFromPasteKey(pasteKey);
-        PasteResponseDto pasteResponseDto = toPasteResponseDto(paste);
+        PasteResponseDto pasteResponseDto = pasteService.getPasteFromPasteKey(pasteKey);
         return ResponseEntity.ok(pasteResponseDto);
     }
 
     @GetMapping("/{pasteId}")
     public ResponseEntity<PasteResponseDto> getPasteByPasteId(@PathVariable long pasteId) {
-        Paste paste = pasteService.getPasteFromPasteId(pasteId);
-        PasteResponseDto pasteResponseDto = toPasteResponseDto(paste);
+        PasteResponseDto pasteResponseDto = pasteService.getPasteFromPasteId(pasteId);
         return ResponseEntity.ok(pasteResponseDto);
-    }
-
-    private static PasteResponseDto toPasteResponseDto(Paste paste) {
-        return new PasteResponseDto(paste.getId(), paste.getPasteKey(), paste.getContent(), paste.getSyntaxHighlight());
     }
 
 }
