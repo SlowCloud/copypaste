@@ -2,7 +2,7 @@ package com.slowcloud.copypaste.service;
 
 import org.springframework.stereotype.Service;
 
-import com.slowcloud.copypaste.dto.PasteResponseDto;
+import com.slowcloud.copypaste.dto.PasteGetResponse;
 import com.slowcloud.copypaste.entity.Paste;
 import com.slowcloud.copypaste.repository.PasteRepository;
 
@@ -14,9 +14,9 @@ public class PasteService {
 
     private final PasteRepository pasteRepository;
 
-    public PasteResponseDto getPasteFromPasteId(long pasteId) {
+    public PasteGetResponse getPasteFromPasteId(long pasteId) {
         Paste paste = pasteRepository.findById(pasteId).orElseThrow();
-        return PasteResponseDto.builder()
+        return PasteGetResponse.builder()
             .id(paste.getId())
             .content(paste.getContent())
             .syntaxHighlight(paste.getSyntaxHighlight())

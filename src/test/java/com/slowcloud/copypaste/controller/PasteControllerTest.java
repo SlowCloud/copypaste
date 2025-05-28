@@ -10,7 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.assertj.MockMvcTester;
 
-import com.slowcloud.copypaste.dto.PasteResponseDto;
+import com.slowcloud.copypaste.dto.PasteGetResponse;
 import com.slowcloud.copypaste.entity.Paste;
 import com.slowcloud.copypaste.entity.SyntaxHighlight;
 import com.slowcloud.copypaste.service.PasteService;
@@ -32,8 +32,8 @@ class PasteControllerTest {
         return paste;
     }
     
-    private PasteResponseDto getPasteResponseDtoFixture() {
-        return PasteResponseDto.builder()
+    private PasteGetResponse getPasteResponseDtoFixture() {
+        return PasteGetResponse.builder()
             .id(PASTE_ID)
             .content(CONTENT)
             .syntaxHighlight(SYNTAX_HIGHLIGHT)
@@ -44,7 +44,7 @@ class PasteControllerTest {
     void getPasteFromPasteId(@Autowired MockMvcTester mockMvcTester) {
 
         Paste paste = getPasteEntityFixture();
-        PasteResponseDto pasteResponseDto = getPasteResponseDtoFixture();
+        PasteGetResponse pasteResponseDto = getPasteResponseDtoFixture();
 
         when(pasteService.getPasteFromPasteId(1)).thenReturn(pasteResponseDto);
 
@@ -53,7 +53,7 @@ class PasteControllerTest {
         .assertThat()
         .hasStatusOk()
         .bodyJson()
-        .convertTo(PasteResponseDto.class)
+        .convertTo(PasteGetResponse.class)
         .satisfies(res -> {
             assertAll(
                 () -> assertEquals(paste.getContent(), res.getContent()),

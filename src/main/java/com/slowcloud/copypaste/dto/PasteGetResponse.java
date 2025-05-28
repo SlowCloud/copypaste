@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Builder
 @Data
-public class PasteResponseDto {
+public class PasteGetResponse {
     private final long id;
     private final String content;
     private final SyntaxHighlight syntaxHighlight;
