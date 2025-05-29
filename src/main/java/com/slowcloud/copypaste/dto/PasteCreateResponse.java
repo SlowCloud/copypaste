@@ -1,10 +1,10 @@
 package com.slowcloud.copypaste.dto;
 
 import lombok.Builder;
-import lombok.Data;
+import lombok.Value;
 
 @Builder
-@Data
+@Value
 public class PasteCreateResponse {
     private final long pasteId;
 }
