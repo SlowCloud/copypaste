@@ -2,11 +2,14 @@ package com.slowcloud.copypaste.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.slowcloud.copypaste.dto.PasteCreateRequest;
+import com.slowcloud.copypaste.dto.PasteCreateResponse;
 import com.slowcloud.copypaste.dto.PasteGetResponse;
 import com.slowcloud.copypaste.service.PasteService;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +31,12 @@ public class PasteController {
     public ResponseEntity<PasteGetResponse> getPasteByPasteId(@PathVariable long pasteId) {
         PasteGetResponse pasteResponseDto = pasteService.getPasteFromPasteId(pasteId);
         return ResponseEntity.ok(pasteResponseDto);
+    }
+
+    @PostMapping
+    public ResponseEntity<PasteCreateResponse> createPaste(@RequestBody PasteCreateRequest pasteCreateRequest) {
+        PasteCreateResponse pasteCreateResponse = pasteService.createPaste(pasteCreateRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(pasteCreateResponse);
     }
 
 }

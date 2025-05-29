@@ -7,9 +7,15 @@ import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.assertj.MockMvcTester;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.slowcloud.copypaste.dto.PasteCreateRequest;
+import com.slowcloud.copypaste.dto.PasteCreateResponse;
 import com.slowcloud.copypaste.dto.PasteGetResponse;
 import com.slowcloud.copypaste.entity.Paste;
 import com.slowcloud.copypaste.entity.SyntaxHighlight;
@@ -24,6 +30,9 @@ class PasteControllerTest {
 
     @MockitoBean
     PasteService pasteService;
+
+    @Autowired
+    ObjectMapper objectMapper;
 
     private Paste getPasteEntityFixture() {
         Paste paste = new Paste();
@@ -42,11 +51,10 @@ class PasteControllerTest {
 
     @Test
     void getPasteFromPasteId(@Autowired MockMvcTester mockMvcTester) {
-
         Paste paste = getPasteEntityFixture();
-        PasteGetResponse pasteResponseDto = getPasteResponseDtoFixture();
 
-        when(pasteService.getPasteFromPasteId(1)).thenReturn(pasteResponseDto);
+        PasteGetResponse pasteGetResponse = getPasteResponseDtoFixture();
+        when(pasteService.getPasteFromPasteId(1)).thenReturn(pasteGetResponse);
 
         mockMvcTester.get().uri(String.format("/api/paste/%d", PASTE_ID))
         .exchange()
@@ -61,6 +69,30 @@ class PasteControllerTest {
             );
         });
     
+    }
+
+    @Test
+    void createPaste(@Autowired MockMvcTester mockMvcTester) throws JsonProcessingException {
+        PasteCreateRequest pasteCreateRequest = PasteCreateRequest.builder()
+            .content(CONTENT)
+            .build();
+
+        PasteCreateResponse pasteCreateResponse = PasteCreateResponse.builder()
+            .pasteId(PASTE_ID)
+            .build();
+        when(pasteService.createPaste(pasteCreateRequest)).thenReturn(pasteCreateResponse);
+
+        mockMvcTester.post().uri("/api/paste")
+            .content(objectMapper.writeValueAsString(pasteCreateRequest))
+            .contentType(MediaType.APPLICATION_JSON)
+            .exchange()
+            .assertThat()
+            .hasStatus(HttpStatus.CREATED)
+            .bodyJson()
+            .convertTo(PasteCreateResponse.class)
+            .satisfies(res -> {
+                assertEquals(pasteCreateResponse.getPasteId(), res.getPasteId());
+            });
     }
 
 }
