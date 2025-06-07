@@ -1,5 +1,9 @@
 package com.slowcloud.copypaste.paste.service;
 
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.slowcloud.copypaste.paste.dto.PasteCreateRequest;
@@ -18,11 +22,7 @@ public class PasteService {
 
     public PasteGetResponse getPasteFromPasteId(long pasteId) {
         Paste paste = pasteRepository.findById(pasteId).orElseThrow();
-        return PasteGetResponse.builder()
-            .id(paste.getId())
-            .content(paste.getContent())
-            .syntaxHighlight(paste.getSyntaxHighlight())
-            .build();
+        return pasteToPasteGetResponse(paste);
     }
 
     public PasteCreateResponse createPaste(PasteCreateRequest pasteCreateRequest) {
@@ -33,6 +33,21 @@ public class PasteService {
         Paste createdPaste = pasteRepository.save(paste);
         return PasteCreateResponse.builder()
             .pasteId(createdPaste.getId())
+            .build();
+    }
+
+    public List<PasteGetResponse> getPastes(Pageable pageable) {
+        return pasteRepository
+            .findAll(pageable)
+            .map(PasteService::pasteToPasteGetResponse)
+            .getContent();
+    }
+
+    private static PasteGetResponse pasteToPasteGetResponse(Paste paste) {
+        return PasteGetResponse.builder()
+            .id(paste.getId())
+            .content(paste.getContent())
+            .syntaxHighlight(paste.getSyntaxHighlight())
             .build();
     }
 
