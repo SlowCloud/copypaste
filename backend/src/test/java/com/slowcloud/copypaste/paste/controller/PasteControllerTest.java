@@ -71,7 +71,6 @@ class PasteControllerTest {
                 () -> assertEquals(paste.getSyntaxHighlight(), res.getSyntaxHighlight())
             );
         });
-    
     }
 
     @Test
