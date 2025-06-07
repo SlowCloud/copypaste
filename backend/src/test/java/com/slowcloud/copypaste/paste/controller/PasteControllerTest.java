@@ -27,6 +27,7 @@ class PasteControllerTest {
     private static final SyntaxHighlight SYNTAX_HIGHLIGHT = SyntaxHighlight.NONE;
     private static final String CONTENT = "hello!";
     private static final int PASTE_ID = 1;
+    private static final String TOO_LONG_CONTENT = "1".repeat(20_000);
 
     @MockitoBean
     PasteService pasteService;
@@ -99,6 +100,26 @@ class PasteControllerTest {
             .satisfies(res -> {
                 assertEquals(pasteCreateResponse.getPasteId(), res.getPasteId());
             });
+    }
+
+    @Test
+    void createPasteFailTooLongContent() throws JsonProcessingException {
+        PasteCreateRequest pasteCreateRequest = PasteCreateRequest.builder()
+            .content(TOO_LONG_CONTENT)
+            .syntaxHighlight(SYNTAX_HIGHLIGHT)
+            .build();
+
+        PasteCreateResponse pasteCreateResponse = PasteCreateResponse.builder()
+            .pasteId(PASTE_ID)
+            .build();
+        when(pasteService.createPaste(pasteCreateRequest)).thenReturn(pasteCreateResponse);
+
+        mockMvcTester.post().uri("/api/paste")
+            .content(objectMapper.writeValueAsString(pasteCreateRequest))
+            .contentType(MediaType.APPLICATION_JSON)
+            .exchange()
+            .assertThat()
+            .hasStatus(HttpStatus.BAD_REQUEST);
     }
 
 }
