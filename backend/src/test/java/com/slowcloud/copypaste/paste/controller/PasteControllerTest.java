@@ -81,9 +81,6 @@ class PasteControllerTest {
             .syntaxHighlight(SYNTAX_HIGHLIGHT)
             .build();
 
-        String s = objectMapper.writeValueAsString(pasteCreateRequest);
-        System.out.println(s);
-
         PasteCreateResponse pasteCreateResponse = PasteCreateResponse.builder()
             .pasteId(PASTE_ID)
             .build();
