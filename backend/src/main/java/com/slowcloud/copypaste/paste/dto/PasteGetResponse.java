@@ -1,6 +1,6 @@
-package com.slowcloud.copypaste.dto;
+package com.slowcloud.copypaste.paste.dto;
 
-import com.slowcloud.copypaste.entity.SyntaxHighlight;
+import com.slowcloud.copypaste.paste.entity.SyntaxHighlight;
 
 import lombok.Builder;
 import lombok.Value;

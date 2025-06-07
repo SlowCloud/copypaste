@@ -1,4 +1,4 @@
-package com.slowcloud.copypaste.controller;
+package com.slowcloud.copypaste.paste.controller;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -14,12 +14,12 @@ import org.springframework.test.web.servlet.assertj.MockMvcTester;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.slowcloud.copypaste.dto.PasteCreateRequest;
-import com.slowcloud.copypaste.dto.PasteCreateResponse;
-import com.slowcloud.copypaste.dto.PasteGetResponse;
-import com.slowcloud.copypaste.entity.Paste;
-import com.slowcloud.copypaste.entity.SyntaxHighlight;
-import com.slowcloud.copypaste.service.PasteService;
+import com.slowcloud.copypaste.paste.dto.PasteCreateRequest;
+import com.slowcloud.copypaste.paste.dto.PasteCreateResponse;
+import com.slowcloud.copypaste.paste.dto.PasteGetResponse;
+import com.slowcloud.copypaste.paste.entity.Paste;
+import com.slowcloud.copypaste.paste.entity.SyntaxHighlight;
+import com.slowcloud.copypaste.paste.service.PasteService;
 
 @WebMvcTest({PasteController.class})
 class PasteControllerTest {
@@ -33,6 +33,9 @@ class PasteControllerTest {
 
     @Autowired
     ObjectMapper objectMapper;
+
+    @Autowired
+    MockMvcTester mockMvcTester;
 
     private Paste getPasteEntityFixture() {
         Paste paste = new Paste();
@@ -50,7 +53,7 @@ class PasteControllerTest {
     }
 
     @Test
-    void getPasteFromPasteId(@Autowired MockMvcTester mockMvcTester) {
+    void getPasteFromPasteId() {
         Paste paste = getPasteEntityFixture();
 
         PasteGetResponse pasteGetResponse = getPasteResponseDtoFixture();
@@ -72,10 +75,14 @@ class PasteControllerTest {
     }
 
     @Test
-    void createPaste(@Autowired MockMvcTester mockMvcTester) throws JsonProcessingException {
+    void createPaste() throws JsonProcessingException {
         PasteCreateRequest pasteCreateRequest = PasteCreateRequest.builder()
             .content(CONTENT)
+            .syntaxHighlight(SYNTAX_HIGHLIGHT)
             .build();
+
+        String s = objectMapper.writeValueAsString(pasteCreateRequest);
+        System.out.println(s);
 
         PasteCreateResponse pasteCreateResponse = PasteCreateResponse.builder()
             .pasteId(PASTE_ID)

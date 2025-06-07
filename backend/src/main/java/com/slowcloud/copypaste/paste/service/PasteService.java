@@ -1,12 +1,12 @@
-package com.slowcloud.copypaste.service;
+package com.slowcloud.copypaste.paste.service;
 
 import org.springframework.stereotype.Service;
 
-import com.slowcloud.copypaste.dto.PasteCreateRequest;
-import com.slowcloud.copypaste.dto.PasteCreateResponse;
-import com.slowcloud.copypaste.dto.PasteGetResponse;
-import com.slowcloud.copypaste.entity.Paste;
-import com.slowcloud.copypaste.repository.PasteRepository;
+import com.slowcloud.copypaste.paste.dto.PasteCreateRequest;
+import com.slowcloud.copypaste.paste.dto.PasteCreateResponse;
+import com.slowcloud.copypaste.paste.dto.PasteGetResponse;
+import com.slowcloud.copypaste.paste.entity.Paste;
+import com.slowcloud.copypaste.paste.repository.PasteRepository;
 
 import lombok.RequiredArgsConstructor;
 

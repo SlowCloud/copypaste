@@ -1,4 +1,4 @@
-package com.slowcloud.copypaste.dto;
+package com.slowcloud.copypaste.paste.dto;
 
 import lombok.Builder;
 import lombok.Value;

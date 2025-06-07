@@ -1,4 +1,4 @@
-package com.slowcloud.copypaste.repository;
+package com.slowcloud.copypaste.paste.repository;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 

@@ -1,4 +1,4 @@
-package com.slowcloud.copypaste.entity;
+package com.slowcloud.copypaste.paste.entity;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;

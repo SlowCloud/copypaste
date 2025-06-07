@@ -1,8 +1,9 @@
-package com.slowcloud.copypaste.dto;
+package com.slowcloud.copypaste.paste.dto;
 
-import com.slowcloud.copypaste.entity.SyntaxHighlight;
+import org.hibernate.validator.constraints.Length;
 
-import jakarta.validation.constraints.Max;
+import com.slowcloud.copypaste.paste.entity.SyntaxHighlight;
+
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Value;
@@ -10,7 +11,7 @@ import lombok.Value;
 @Builder
 @Value
 public class PasteCreateRequest {
-    @Max(value = 10000L, message = "텍스트 길이 제한을 초과하였습니다.")
+    @Length(max = 10000, message = "텍스트 길이 제한을 초과하였습니다.")
     private final String content;
     @NotNull
     private final SyntaxHighlight syntaxHighlight;

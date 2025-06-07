@@ -1,4 +1,4 @@
-package com.slowcloud.copypaste.entity;
+package com.slowcloud.copypaste.paste.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;

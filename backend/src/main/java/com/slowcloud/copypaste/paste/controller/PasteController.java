@@ -1,11 +1,11 @@
-package com.slowcloud.copypaste.controller;
+package com.slowcloud.copypaste.paste.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.slowcloud.copypaste.dto.PasteCreateRequest;
-import com.slowcloud.copypaste.dto.PasteCreateResponse;
-import com.slowcloud.copypaste.dto.PasteGetResponse;
-import com.slowcloud.copypaste.service.PasteService;
+import com.slowcloud.copypaste.paste.dto.PasteCreateRequest;
+import com.slowcloud.copypaste.paste.dto.PasteCreateResponse;
+import com.slowcloud.copypaste.paste.dto.PasteGetResponse;
+import com.slowcloud.copypaste.paste.service.PasteService;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
