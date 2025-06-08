@@ -4,9 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
+import com.slowcloud.copypaste.security.config.SecurityConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -21,6 +23,7 @@ import com.slowcloud.copypaste.paste.entity.Paste;
 import com.slowcloud.copypaste.paste.entity.SyntaxHighlight;
 import com.slowcloud.copypaste.paste.service.PasteService;
 
+@Import(SecurityConfig.class)
 @WebMvcTest({PasteController.class})
 class PasteControllerTest {
 
@@ -66,12 +69,10 @@ class PasteControllerTest {
         .hasStatusOk()
         .bodyJson()
         .convertTo(PasteGetResponse.class)
-        .satisfies(res -> {
-            assertAll(
-                () -> assertEquals(paste.getContent(), res.getContent()),
-                () -> assertEquals(paste.getSyntaxHighlight(), res.getSyntaxHighlight())
-            );
-        });
+        .satisfies(res -> assertAll(
+            () -> assertEquals(paste.getContent(), res.getContent()),
+            () -> assertEquals(paste.getSyntaxHighlight(), res.getSyntaxHighlight())
+        ));
     }
 
     @Test
@@ -94,9 +95,7 @@ class PasteControllerTest {
             .hasStatus(HttpStatus.CREATED)
             .bodyJson()
             .convertTo(PasteCreateResponse.class)
-            .satisfies(res -> {
-                assertEquals(pasteCreateResponse.getPasteId(), res.getPasteId());
-            });
+            .satisfies(res -> assertEquals(pasteCreateResponse.getPasteId(), res.getPasteId()));
     }
 
     @Test
