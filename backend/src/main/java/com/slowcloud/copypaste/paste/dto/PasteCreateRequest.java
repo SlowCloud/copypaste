@@ -1,12 +1,10 @@
 package com.slowcloud.copypaste.paste.dto;
 
-import org.hibernate.validator.constraints.Length;
-
 import com.slowcloud.copypaste.paste.entity.SyntaxHighlight;
-
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Value;
+import org.hibernate.validator.constraints.Length;
 
 @Builder
 @Value

@@ -1,9 +1,13 @@
 package com.slowcloud.copypaste.paste.controller;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
-
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.slowcloud.copypaste.paste.dto.PasteCreateRequest;
+import com.slowcloud.copypaste.paste.dto.PasteCreateResponse;
+import com.slowcloud.copypaste.paste.dto.PasteGetResponse;
+import com.slowcloud.copypaste.paste.entity.Paste;
+import com.slowcloud.copypaste.paste.entity.SyntaxHighlight;
+import com.slowcloud.copypaste.paste.service.PasteService;
 import com.slowcloud.copypaste.security.config.SecurityConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +18,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.assertj.MockMvcTester;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.slowcloud.copypaste.paste.dto.PasteCreateRequest;
-import com.slowcloud.copypaste.paste.dto.PasteCreateResponse;
-import com.slowcloud.copypaste.paste.dto.PasteGetResponse;
-import com.slowcloud.copypaste.paste.entity.Paste;
-import com.slowcloud.copypaste.paste.entity.SyntaxHighlight;
-import com.slowcloud.copypaste.paste.service.PasteService;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
 @Import(SecurityConfig.class)
 @WebMvcTest({PasteController.class})

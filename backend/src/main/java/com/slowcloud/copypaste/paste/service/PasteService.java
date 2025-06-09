@@ -1,17 +1,15 @@
 package com.slowcloud.copypaste.paste.service;
 
-import java.util.List;
-
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-
 import com.slowcloud.copypaste.paste.dto.PasteCreateRequest;
 import com.slowcloud.copypaste.paste.dto.PasteCreateResponse;
 import com.slowcloud.copypaste.paste.dto.PasteGetResponse;
 import com.slowcloud.copypaste.paste.entity.Paste;
 import com.slowcloud.copypaste.paste.repository.PasteRepository;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
