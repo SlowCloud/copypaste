@@ -1,5 +1,6 @@
 package com.slowcloud.copypaste.security.service;
 
+import com.slowcloud.copypaste.security.dto.SignInRequest;
 import com.slowcloud.copypaste.security.dto.SignUpRequest;
 import com.slowcloud.copypaste.security.entity.CopyPasteUser;
 import com.slowcloud.copypaste.security.repository.UserRepository;
@@ -8,14 +9,22 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.jwt.JwtClaimsSet;
+import org.springframework.security.oauth2.jwt.JwtEncoder;
+import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
+
+import java.time.Instant;
 
 @RequiredArgsConstructor
 @Service
 public class UserService implements UserDetailsService {
 
+    public static final int EXPIRE_SECOND = 600;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtEncoder jwtEncoder;
 
     public void createUser(SignUpRequest user) {
 
@@ -30,6 +39,33 @@ public class UserService implements UserDetailsService {
                 .build();
 
         userRepository.save(copyPasteUser);
+
+    }
+
+    public String signIn(SignInRequest signInRequest) {
+
+        if(!userRepository.existsByUsername(signInRequest.getUsername())) {
+            throw new RuntimeException();
+        }
+
+        CopyPasteUser user = userRepository.findByUsername(signInRequest.getUsername());
+        if(!user.getPassword().equals(passwordEncoder.encode(signInRequest.getPassword()))) {
+            throw new RuntimeException();
+        }
+
+        var now = Instant.now();
+
+        JwtClaimsSet jwtClaimsSet = JwtClaimsSet.builder()
+                .issuer("copypaste")
+                .issuedAt(now)
+                .expiresAt(now.plusSeconds(EXPIRE_SECOND))
+                .subject("access_token")
+                .claim("username", user.getUsername())
+                .build();
+
+        Jwt jwt = jwtEncoder.encode(JwtEncoderParameters.from(jwtClaimsSet));
+
+        return jwt.getTokenValue();
 
     }
 

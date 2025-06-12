@@ -14,7 +14,7 @@
 
 ```shell
 openssl genrsa -out private.pem 2048
-openssl genrsa -in private.pem -pubout -out public.pem
+openssl rsa -in private.pem -pubout -out public.pem
 ```
 
 생성된 키페어는 `SecurityConfig`에서 가져와 사용하게 됩니다.
