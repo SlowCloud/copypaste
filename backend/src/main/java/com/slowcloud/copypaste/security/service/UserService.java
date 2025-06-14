@@ -49,7 +49,7 @@ public class UserService implements UserDetailsService {
         }
 
         CopyPasteUser user = userRepository.findByUsername(signInRequest.getUsername());
-        if(!user.getPassword().equals(passwordEncoder.encode(signInRequest.getPassword()))) {
+        if(passwordEncoder.matches(user.getPassword(), signInRequest.getPassword())) {
             throw new RuntimeException();
         }
 
