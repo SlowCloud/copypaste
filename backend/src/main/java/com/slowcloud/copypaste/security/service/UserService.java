@@ -2,9 +2,11 @@ package com.slowcloud.copypaste.security.service;
 
 import com.slowcloud.copypaste.security.dto.SignInRequest;
 import com.slowcloud.copypaste.security.dto.SignUpRequest;
+import com.slowcloud.copypaste.security.entity.Authority;
 import com.slowcloud.copypaste.security.entity.CopyPasteUser;
 import com.slowcloud.copypaste.security.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -36,6 +38,7 @@ public class UserService implements UserDetailsService {
                 .username(user.getUsername())
                 .password(passwordEncoder.encode(user.getPassword()))
                 .email(user.getEmail())
+                .authority(Authority.USER)
                 .build();
 
         userRepository.save(copyPasteUser);
