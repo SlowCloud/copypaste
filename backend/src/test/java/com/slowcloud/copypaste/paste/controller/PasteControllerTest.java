@@ -15,6 +15,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.assertj.MockMvcTester;
 
@@ -75,6 +76,7 @@ class PasteControllerTest {
     }
 
     @Test
+    @WithMockUser
     void createPaste() throws JsonProcessingException {
         PasteCreateRequest pasteCreateRequest = PasteCreateRequest.builder()
             .content(CONTENT)
@@ -98,6 +100,7 @@ class PasteControllerTest {
     }
 
     @Test
+    @WithMockUser
     void createPasteFailTooLongContent() throws JsonProcessingException {
         PasteCreateRequest pasteCreateRequest = PasteCreateRequest.builder()
             .content(TOO_LONG_CONTENT)
