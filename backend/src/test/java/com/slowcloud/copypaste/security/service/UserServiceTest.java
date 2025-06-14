@@ -15,7 +15,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -27,6 +26,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
+
+    static final String USERNAME = "username";
+    static final String PASSWORD = "password";
+    static final String EMAIL = "fake@email.com";
 
     @Mock
     UserRepository userRepository;
@@ -59,9 +62,9 @@ class UserServiceTest {
     void createUserTest() {
 
         SignUpRequest signUpRequest = SignUpRequest.builder()
-                .username("username")
-                .password("password")
-                .email("fake@email.com")
+                .username(USERNAME)
+                .password(PASSWORD)
+                .email(EMAIL)
                 .build();
 
         userService.createUser(signUpRequest);
@@ -78,9 +81,9 @@ class UserServiceTest {
                 .thenReturn(true);
 
         SignUpRequest signUpRequest = SignUpRequest.builder()
-                .username("username")
-                .password("password")
-                .email("fake@email.com")
+                .username(USERNAME)
+                .password(PASSWORD)
+                .email(EMAIL)
                 .build();
 
         assertThrows(RuntimeException.class, () -> userService.createUser(signUpRequest));
@@ -90,17 +93,14 @@ class UserServiceTest {
     @Test
     void signInTest() {
 
-        final String username = "username";
-        final String password = "password";
-
         SignInRequest signInRequest = SignInRequest.builder()
-                .username(username)
-                .password(password)
+                .username(USERNAME)
+                .password(PASSWORD)
                 .build();
 
         CopyPasteUser copyPasteUser =CopyPasteUser.builder()
-                .username(username)
-                .password(passwordEncoder.encode(password))
+                .username(USERNAME)
+                .password(passwordEncoder.encode(PASSWORD))
                 .build();
 
         Mockito.when(userRepository.existsByUsername(Mockito.any(String.class)))
