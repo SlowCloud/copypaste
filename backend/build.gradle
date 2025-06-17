@@ -36,6 +36,10 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	testRuntimeOnly 'com.h2database:h2'
+
+	implementation platform("com.google.cloud:spring-cloud-gcp-dependencies:6.2.2")
+	implementation "org.springframework.cloud:spring-cloud-gcp-starter"
+	implementation "org.springframework.cloud:spring-cloud-gcp-starter-sql-mysql"
 }
 
 tasks.named('test') {
