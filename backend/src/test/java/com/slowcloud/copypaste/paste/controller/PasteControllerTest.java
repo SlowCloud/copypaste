@@ -9,13 +9,20 @@ import com.slowcloud.copypaste.paste.entity.Paste;
 import com.slowcloud.copypaste.paste.entity.SyntaxHighlight;
 import com.slowcloud.copypaste.paste.service.PasteService;
 import com.slowcloud.copypaste.security.config.SecurityConfig;
+import com.slowcloud.copypaste.security.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.TestPropertySources;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.assertj.MockMvcTester;
 
@@ -23,8 +30,9 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
+@TestPropertySource(properties = {"jwt.publicKey=classpath:public.pem", "jwt.privateKey=classpath:private.pem"})
 @Import(SecurityConfig.class)
-@WebMvcTest({PasteController.class})
+@WebMvcTest(PasteController.class)
 class PasteControllerTest {
 
     private static final SyntaxHighlight SYNTAX_HIGHLIGHT = SyntaxHighlight.NONE;
