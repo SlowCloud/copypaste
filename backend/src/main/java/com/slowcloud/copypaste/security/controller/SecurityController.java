@@ -1,7 +1,7 @@
 package com.slowcloud.copypaste.security.controller;
 
-import com.slowcloud.copypaste.security.dto.SignUpRequest;
 import com.slowcloud.copypaste.security.dto.SignInRequest;
+import com.slowcloud.copypaste.security.dto.SignUpRequest;
 import com.slowcloud.copypaste.security.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
