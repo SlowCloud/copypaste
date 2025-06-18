@@ -1,12 +1,25 @@
 # CopyPaste
 
-텍스트 공유 사이트
+텍스트 공유 서비스
 
 ## 사용 설명서
 
+### 환경변수 설정하기
+
+- `JWT_PUBLIC_KEY`: 공개키를 등록해주세요. JWT 인증에 사용됩니다.
+- `JWT_PRIVATE_KEY`: 개인키를 설정해주세요. JWT 발급에 사용됩니다.
+- `COPYPASTE_SQL_USERNAME`: MySQL의 사용자명입니다. 생략 시 `root`로 적용됩니다.
+- `COPYPASTE_SQL_PASSWORD`: MYSQL의 사용자 비밀번호입니다. 생략 시 공란으로 적용됩니다.
+- `COPYPASTE_GCP_SQL_NAME`: 사용할 SQL의 DB 이름입니다.
+- `COPYPASTE_GCP_INSTNANCE_CONNECTION_NAME`: SQL 인스턴스의 연결 이름입니다.
+  - 생성한 SQL 인스턴스의 `연결 이름` 항목을 복사하여 입력해주세요.
+  - 자세한 내용은 [다음 링크](https://googlecloudplatform.github.io/spring-cloud-gcp/6.2.2/reference/html/index.html#cloud-sql-configuration-properties)를 참고해주세요.
+
+Google ADC 설정 등을 위해, 가급적 GCP 환경 내에서 실행하는 것을 권장드립니다.
+
 ### 키페어 생성하기
 
-서버를 만들기 전, 개인키 / 공개키 생성을 진행해야 합니다.
+JWT 생성 및 인증 관리를 위해, 개인키 / 공개키 생성을 진행해야 합니다.
 
 다음은 `openssl`을 활용하여 키쌍을 생성하는 방법입니다.
 다음 아래의 명령어를 입력하여 키페어를 생성해주세요.
@@ -15,31 +28,3 @@
 openssl genrsa -out private.pem 2048
 openssl rsa -in private.pem -pubout -out public.pem
 ```
-
-### 환경변수 설정하기
-
-#### 키페어 등록
-
-JWT 인증 구현을 위해, 생성된 키 파일의 내용을 환경변수로 등록해주세요.
-생성된 키페어는 `SecurityConfig`에서 가져와 사용하게 됩니다.
-
-공개키는 `JWT_PUBLIC_KEY`,
-개인키는 `JWT_PRIVATE_KEY`로 등록해주면 됩니다.
-
-#### SQL `USERNAME`, `PASSWORD` 등록
-
-SQL에서 사용하는 `USERNAME`, `PASSWORD`를 등록해주세요.
-
-`USERNAME`은 `COPYPASTE_SQL_USERNAME`,
-`PASSWORD`는 `COPYPASTE_SQL_PASSWORD`에 등록해주시면 됩니다.
-
-`USERNAME`은 기본값으로 `root`, `PASSWORD`는 공란으로 설정됩니다.
-
-### `application.properties` 수정하기
-
-Spring Cloud GCP를 통해 SQL을 사용하기 위해서,
-`spring.cloud.gcp.sql.database-name`과 `spring.cloud.gcp.sql.instance-connection-name`를
-사용할 프로젝트에 알맞게 수정해주세요.
-
-[다음 링크](https://github.com/GoogleCloudPlatform/spring-cloud-gcp/blob/main/spring-cloud-gcp-samples/spring-cloud-gcp-sql-mysql-sample/README.adoc)
-에서 관련 내용을 찾을 수 있습니다.
