@@ -41,6 +41,7 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	testRuntimeOnly 'com.h2database:h2'
+	runtimeOnly 'com.h2database:h2'
 
 	implementation 'com.google.cloud:spring-cloud-gcp-starter'
 	implementation 'com.google.cloud:spring-cloud-gcp-starter-sql-mysql'
