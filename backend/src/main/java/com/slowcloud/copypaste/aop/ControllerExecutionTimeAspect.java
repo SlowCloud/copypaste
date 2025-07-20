@@ -17,7 +17,7 @@ import java.util.Map;
 @Aspect
 public class ControllerExecutionTimeAspect {
 
-    private static final Logger logger = LoggerFactory.getLogger(ControllerLoggerAspect.class);
+    private static final Logger logger = LoggerFactory.getLogger(ControllerExecutionTimeAspect.class);
 
     @Pointcut("within(com.slowcloud.copypaste..controller..*)")
     private void controllerPointcut() {}
